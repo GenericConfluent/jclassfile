@@ -1950,3 +1950,77 @@ fn should_load_and_parse_runtime_invisible_parameter_annotations() {
 
     assert_eq!(actual_class_file, expected_class_file)
 }
+
+#[test]
+fn should_load_and_parse_runtime_invisible_type_annotations() {
+    let bytes = include_bytes!("test_data/RuntimeInvisibleTypeAnnotations.class");
+    let actual_class_file = parse(bytes).unwrap();
+
+    let expected_class_file = ClassFile::new(
+        0xCAFEBABE,
+        0,
+        65,
+        vec![
+            Empty, //                                               0
+            Class {
+                //                                                  1
+                name_index: 2,
+            },
+            Utf8 {
+                //                                                  2
+                value: "RuntimeInvisibleTypeAnnotations".into(),
+            },
+            Class {
+                //                                                  3
+                name_index: 4,
+            },
+            Utf8 {
+                //                                                  4
+                value: "java/lang/Object".into(),
+            },
+            Utf8 {
+                //                                                  5
+                value: "someMethod".into(),
+            },
+            Utf8 {
+                //                                                  6
+                value: "()Ljava/lang/String;".into(),
+            },
+            Utf8 {
+                //                                                  7
+                value: "LInvisibleTypeInfo;".into(),
+            },
+            Utf8 {
+                //                                                  8
+                value: "SourceFile".into(),
+            },
+            Utf8 {
+                //                                                  9
+                value: "RuntimeInvisibleTypeAnnotations.java".into(),
+            },
+        ],
+        ClassFlags::ACC_INTERFACE | ClassFlags::ACC_ABSTRACT,
+        1,
+        3,
+        vec![],
+        vec![],
+        vec![MethodInfo::new(
+            MethodFlags::ACC_PUBLIC | MethodFlags::ACC_ABSTRACT,
+            5,
+            6,
+            vec![RuntimeInvisibleTypeAnnotations {
+                type_annotations: vec![TypeAnnotation::new(
+                    TargetType::METHOD_RETURN,
+                    TargetInfo::EmptyTarget,
+                    vec![],
+                    Annotation::new(7, vec![]),
+                )],
+            }],
+        )],
+        vec![SourceFile {
+            sourcefile_index: 9,
+        }],
+    );
+
+    assert_eq!(actual_class_file, expected_class_file)
+}

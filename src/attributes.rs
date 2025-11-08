@@ -83,7 +83,9 @@ pub enum Attribute {
     RuntimeVisibleTypeAnnotations {
         type_annotations: Vec<TypeAnnotation>,
     },
-    RuntimeInvisibleTypeAnnotations,
+    RuntimeInvisibleTypeAnnotations {
+        type_annotations: Vec<TypeAnnotation>,
+    },
     MethodParameters {
         parameters: Vec<MethodParameterRecord>,
     },
@@ -633,6 +635,15 @@ fn get_attribute(
             }
 
             RuntimeVisibleTypeAnnotations { type_annotations }
+        }
+        "RuntimeInvisibleTypeAnnotations" => {
+            let num_annotations: u16 = get_int(&data, &mut start_from)?;
+            let mut type_annotations = Vec::with_capacity(num_annotations as usize);
+            for _ in 0..num_annotations {
+                type_annotations.push(get_type_annotation(&data, &mut start_from)?);
+            }
+
+            RuntimeInvisibleTypeAnnotations { type_annotations }
         }
         "AnnotationDefault" => {
             let raw = read_byte_block(&data, *start_from, attribute_length as usize)?.to_vec();
