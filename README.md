@@ -4,6 +4,10 @@
 [![Docs][docs-image]][docs-link]
 [![MIT Licensed][license-mit-image]][license-mit-link]
 
+forked from https://github.com/hextriclosan/rusty-jvm/tree/main
+
+This fork will silently ignore runtime invisible parameter annotations.
+
 ## Introduction
 
 This crate reads and parses Java class files, following the [Java Virtual Machine Specification (JVMS), Chapter §4][jvms-4].
