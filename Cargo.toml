@@ -1,0 +1,30 @@
+[package]
+name = "jclassfile"
+version = "0.3.0"
+edition = "2021"
+rust-version = "1.70"
+authors = ["Igor Rudenko <iostream64@gmail.com>"]
+description = "Java class files parser"
+license = "MIT"
+homepage = "https://github.com/hextriclosan/rusty-jvm/tree/main/jclassfile"
+repository = "https://github.com/hextriclosan/rusty-jvm"
+documentation = "https://docs.rs/jclassfile"
+readme = "README.md"
+keywords = ["jvm", "java", "bytecode", "classfile", "parser"]
+categories = ["parser-implementations", "parsing", "development-tools::ffi"]
+exclude = ["src/bin/**", "tests/**"]
+
+[dependencies]
+num-traits = "0.2.19"
+cesu8 = "1.1.0"
+bitflags = "2.9.2"
+getset = "0.1.6"
+derive-new = "0.7.0"
+serde = { version = "1.0.219", optional = true, features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1.0.143"
+
+[features]
+default = []
+serde = ["dep:serde", "bitflags/serde"]
