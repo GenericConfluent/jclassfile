@@ -6,8 +6,6 @@
 
 forked from https://github.com/hextriclosan/rusty-jvm/tree/main
 
-This fork will silently ignore runtime invisible parameter annotations.
-
 ## Introduction
 
 This crate reads and parses Java class files, following the [Java Virtual Machine Specification (JVMS), Chapter §4][jvms-4].
@@ -52,7 +50,7 @@ The following sections of the Java Virtual Machine Specification (JVMS, Java SE 
     - [x] The element_value structure ([§4.7.16.1][jvms-4.7.16.1])
   - [x] The RuntimeInvisibleAnnotations Attribute ([§4.7.17][jvms-4.7.17])
   - [x] The RuntimeVisibleParameterAnnotations Attribute ([§4.7.18][jvms-4.7.18])
-  - [ ] The RuntimeInvisibleParameterAnnotations Attribute ([§4.7.19][jvms-4.7.19])
+  - [x] The RuntimeInvisibleParameterAnnotations Attribute ([§4.7.19][jvms-4.7.19])
   - [x] The RuntimeVisibleTypeAnnotations Attribute ([§4.7.20][jvms-4.7.20])
     - [x] The target_info union ([§4.7.20.1][jvms-4.7.20.1])
     - [x] The type_path structure ([§4.7.20.2][jvms-4.7.20.2])

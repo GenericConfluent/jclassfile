@@ -1754,3 +1754,199 @@ fn should_serialize_to_string() {
         r#"{"magic":3405691582,"minor_version":0,"major_version":66,"constant_pool":["Empty",{"Class":{"name_index":2}},{"Utf8":{"value":"Mutf8"}},{"Class":{"name_index":4}},{"Utf8":{"value":"java/lang/Object"}},{"Utf8":{"value":"withZero"}},{"Utf8":{"value":"Ljava/lang/String;"}},{"Utf8":{"value":"ConstantValue"}},{"String":{"string_index":9}},{"Utf8":{"value":"\u0000abc"}},{"Utf8":{"value":"singleByteLatin"}},{"String":{"string_index":12}},{"Utf8":{"value":"A"}},{"Utf8":{"value":"twoByteUkrainian"}},{"String":{"string_index":15}},{"Utf8":{"value":"ї"}},{"Utf8":{"value":"threeByteSnowman"}},{"String":{"string_index":18}},{"Utf8":{"value":"☃"}},{"Utf8":{"value":"fourByteGothicLetterHwair"}},{"String":{"string_index":21}},{"Utf8":{"value":"𐍈"}},{"Utf8":{"value":"fourByteEmoji"}},{"String":{"string_index":24}},{"Utf8":{"value":"😂"}},{"Utf8":{"value":"SourceFile"}},{"Utf8":{"value":"Mutf8.java"}}],"access_flags":"ACC_INTERFACE | ACC_ABSTRACT","this_class":1,"super_class":3,"interfaces":[],"fields":[{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":5,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":8}}]},{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":10,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":11}}]},{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":13,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":14}}]},{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":16,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":17}}]},{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":19,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":20}}]},{"access_flags":"ACC_PUBLIC | ACC_STATIC | ACC_FINAL","name_index":22,"descriptor_index":6,"attributes":[{"ConstantValue":{"constantvalue_index":23}}]}],"methods":[],"attributes":[{"SourceFile":{"sourcefile_index":26}}]}"#
     )
 }
+
+#[test]
+fn should_load_and_parse_runtime_invisible_parameter_annotations() {
+    let bytes = include_bytes!("test_data/RuntimeInvisibleParameterAnnotations.class");
+    let actual_class_file = parse(bytes).unwrap();
+
+    let expected_class_file = ClassFile::new(
+        0xCAFEBABE,
+        0,
+        65,
+        vec![
+            Empty, //                                               0
+            Methodref {
+                //                                                  1
+                class_index: 2,
+                name_and_type_index: 3,
+            },
+            Class {
+                //                                                  2
+                name_index: 4,
+            },
+            NameAndType {
+                //                                                  3
+                name_index: 5,
+                descriptor_index: 6,
+            },
+            Utf8 {
+                //                                                  4
+                value: "java/lang/Object".into(),
+            },
+            Utf8 {
+                //                                                  5
+                value: "<init>".into(),
+            },
+            Utf8 {
+                //                                                  6
+                value: "()V".into(),
+            },
+            Class {
+                //                                                  7
+                name_index: 8,
+            },
+            Utf8 {
+                //                                                  8
+                value: "RuntimeInvisibleParameterAnnotations".into(),
+            },
+            Utf8 {
+                //                                                  9
+                value: "Code".into(),
+            },
+            Utf8 {
+                //                                                  10
+                value: "LineNumberTable".into(),
+            },
+            Utf8 {
+                //                                                  11
+                value: "LocalVariableTable".into(),
+            },
+            Utf8 {
+                //                                                  12
+                value: "this".into(),
+            },
+            Utf8 {
+                //                                                  13
+                value: "LRuntimeInvisibleParameterAnnotations;".into(),
+            },
+            Utf8 {
+                //                                                  14
+                value: "someMethod".into(),
+            },
+            Utf8 {
+                //                                                  15
+                value: "(Ljava/lang/String;I)V".into(),
+            },
+            Utf8 {
+                //                                                  16
+                value: "msg".into(),
+            },
+            Utf8 {
+                //                                                  17
+                value: "Ljava/lang/String;".into(),
+            },
+            Utf8 {
+                //                                                  18
+                value: "count".into(),
+            },
+            Utf8 {
+                //                                                  19
+                value: "I".into(),
+            },
+            Utf8 {
+                //                                                  20
+                value: "MethodParameters".into(),
+            },
+            Utf8 {
+                //                                                  21
+                value: "LInvisibleParamAnnotation;".into(),
+            },
+            Utf8 {
+                //                                                  22
+                value: "value".into(),
+            },
+            Utf8 {
+                //                                                  23
+                value: "custom".into(),
+            },
+            Utf8 {
+                //                                                  24
+                value: "SourceFile".into(),
+            },
+            Utf8 {
+                //                                                  25
+                value: "RuntimeInvisibleParameterAnnotations.java".into(),
+            },
+        ],
+        ClassFlags::ACC_PUBLIC | ClassFlags::ACC_SUPER,
+        7,
+        2,
+        vec![],
+        vec![],
+        vec![
+            MethodInfo::new(
+                MethodFlags::ACC_PUBLIC,
+                5,
+                6,
+                vec![Code {
+                    max_stack: 1,
+                    max_locals: 1,
+                    code: vec![0x2a, 0xb7, 0x0, 0x1, 0xb1],
+                    exception_table: vec![],
+                    attributes: vec![
+                        LineNumberTable {
+                            line_number_table: vec![LineNumberRecord::new(0, 12)],
+                        },
+                        LocalVariableTable {
+                            local_variable_table: vec![LocalVariableTableRecord::new(
+                                0, 5, 12, 13, 0,
+                            )],
+                        },
+                    ],
+                }],
+            ),
+            MethodInfo::new(
+                MethodFlags::ACC_PUBLIC,
+                14,
+                15,
+                vec![
+                    Code {
+                        max_stack: 0,
+                        max_locals: 3,
+                        code: vec![0xb1],
+                        exception_table: vec![],
+                        attributes: vec![
+                            LineNumberTable {
+                                line_number_table: vec![LineNumberRecord::new(0, 14)],
+                            },
+                            LocalVariableTable {
+                                local_variable_table: vec![
+                                    LocalVariableTableRecord::new(0, 1, 12, 13, 0),
+                                    LocalVariableTableRecord::new(0, 1, 16, 17, 1),
+                                    LocalVariableTableRecord::new(0, 1, 18, 19, 2),
+                                ],
+                            },
+                        ],
+                    },
+                    MethodParameters {
+                        parameters: vec![
+                            MethodParameterRecord::new(16, MethodParameterFlags::ACC_FINAL),
+                            MethodParameterRecord::new(18, MethodParameterFlags::empty()),
+                        ],
+                    },
+                    RuntimeInvisibleParameterAnnotations {
+                        parameter_annotations: vec![
+                            vec![Annotation::new(21, vec![])],
+                            vec![Annotation::new(
+                                21,
+                                vec![ElementValuePair::new(
+                                    22,
+                                    ConstValueIndex {
+                                        tag: 's' as u8,
+                                        const_value_index: 23,
+                                    },
+                                )],
+                            )],
+                        ],
+                    },
+                ],
+            ),
+        ],
+        vec![SourceFile {
+            sourcefile_index: 25,
+        }],
+    );
+
+    assert_eq!(actual_class_file, expected_class_file)
+}
